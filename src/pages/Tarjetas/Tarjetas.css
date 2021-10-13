@@ -1,0 +1,76 @@
+#editar{
+    width: 50% !important;
+}
+
+#gestoredit{
+    margin: 0 !important;
+    padding: 0 !important;
+    align-content: center;
+}
+
+#formularioedit{
+    margin: 15px 0px;
+    border-radius: 15px;
+}
+
+.eliminar{
+    display: flex;
+    justify-content: flex-end !important;
+}
+
+#borrar{
+    width: 15% !important;
+    font-size: 16px;
+    margin-left: 20%;
+    border-radius: 15px;
+}
+
+#tarjeta{
+    width: 350px !important;
+    height: 400px !important;
+}
+
+#alert-dialog-title{
+    background:#007385 !important
+}
+
+#alertTitle{
+    color:#fff;
+}
+
+#alert{
+    color: black;
+    font-weight: bold;
+}
+
+#botones{
+    font-weight: bold !important;
+}
+
+.card .text-white .bg-primary .mb-3{
+box-shadow: 0px 0px 5px 1px black;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+
+
+
+
+
+.contenido{
+    display: flex !important;
+    flex-wrap: wrap-reverse !important;
+    flex-direction: row-reverse !important;
+    align-items: flex-start !important;
+    justify-content: space-around !important;
+    width: auto !important
+}
+
+.juntar{
+    justify-content: space-around !important;
+}

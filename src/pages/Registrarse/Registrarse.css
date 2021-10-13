@@ -1,0 +1,100 @@
+.divLogin {
+    height: 79%;
+    width: 100%;
+    padding-top: 7%;
+    font-family: "Poppins", sans-serif;
+}
+
+.formLogin {
+    min-height: 65%;
+    width: 40%;
+    margin: 0 auto;
+    padding-top: 0px;
+    background: white;
+    background: linear-gradient( to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+    box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
+    backdrop-filter: blur(3rem);
+    border-radius: 2rem;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.reg-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 1rem !important;
+    margin-bottom: 6%;
+    color: #426696;
+    opacity: 0.8;
+}
+
+form {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-reg,
+.btn-reg {
+    background: linear-gradient( to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+    border: none;
+    margin: 2% auto;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 2rem !important;
+    padding: 7px 18px;
+}
+
+.input-reg::placeholder {
+    color: #426696;
+}
+
+.input-reg {
+    height: 2rem;
+    width: 80%;
+}
+
+.botonesForm {
+    height: 30%;
+    width: 90%;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+span {
+    width: 60%;
+    margin: 1% auto;
+    text-align: center;
+    color: rgb(180, 0, 0);
+}
+
+.input-reg:focus {
+    outline: none;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.404);
+}
+
+.circle1,
+.circle2 {
+    background: white;
+    background: linear-gradient( to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+    height: 20rem;
+    width: 20rem;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.circle1 {
+    top: 5%;
+    right: 20%;
+}
+
+.circle2 {
+    bottom: 5%;
+    left: 20%;
+}
