@@ -10,6 +10,8 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
+	const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 	// Define en una variable booleana si el usuario tiene o no acceso
 	const [tieneAcceso, setTieneAcceso] = useState(false);
 	// define los datos del acceso del usuario (nombre,email,password)
@@ -37,12 +39,11 @@ function App() {
 
 	// ----------------------------Get Principal---------------------------------
 
-	const url = "http://localhost:5000/plantas";
 	const [listaPlantas, setListaPlantas] = useState([]);
 
 	const recuperaDatos = async () => {
 		try {
-			let respuesta = await fetch(url);
+			let respuesta = await fetch(BASE_URL);
 			let resultado = await respuesta.json();
 			setListaPlantas(resultado.respuesta);
 			// return(resultado.respuesta)
@@ -67,7 +68,7 @@ function App() {
 			Foto: planta.Foto,
 		});
 
-		console.log("raw", raw);
+		// console.log("raw", raw);
 		let requestOptions = {
 			method: "POST",
 			headers: myHeaders,
@@ -75,9 +76,9 @@ function App() {
 			redirect: "follow",
 		};
 
-		await fetch("http://localhost:5000/plantas", requestOptions)
+		await fetch(BASE_URL, requestOptions)
 			.then((response) => response.text())
-			.then((result) => console.log(result))
+			// .then((result) => console.log(result))
 			.catch((error) => console.log("error", error));
 
 		recuperaDatos();
@@ -91,9 +92,9 @@ function App() {
 			redirect: "follow",
 		};
 
-		await fetch(`http://localhost:5000/plantas/eliminar/` + _id, requestOptions)
+		await fetch(`${BASE_URL}/eliminar/` + _id, requestOptions)
 			.then((response) => response.text())
-			.then((result) => console.log(result))
+			// .then((result) => console.log(result))
 			.catch((error) => console.log("error", error));
 
 		recuperaDatos();
@@ -123,7 +124,7 @@ function App() {
 			redirect: "follow",
 		};
 
-		await fetch(`http://localhost:5000/plantas/modificar/${planta.Nombre}`, requestOptions)
+		await fetch(`${BASE_URL}/modificar/${planta.Nombre}`, requestOptions)
 			.then((response) => response.text())
 			.catch((error) => console.log("error", error));
 
@@ -171,11 +172,14 @@ function App() {
 						</Route>
 
 						<Route exact path="/mostrar">
-							<div className="juntar">
+							<div className="container">
 								<form id="inicio">
 									<input type="text" name="busca" icon="search" id="busca" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
 								</form>
-								<div className="contenido">
+							</div>
+							<div className="container-fluid">
+								{/* Busca las plantas: carga la busqueda o todas las plantasss */}
+								<div className="row tarjetas">
 									{searchInput.length > 1
 										? filteredResults.map((item) => {
 												return <Tarjetas key={item._id} planta={item} eliminar={eliminarPlanta} modificar={modificarPlanta} />;

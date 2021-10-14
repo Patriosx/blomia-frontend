@@ -10,14 +10,15 @@ import Foto from "./Foto";
 // const cloudinary = require("cloudinary").v2;
 
 function Formulario(props) {
+	const BASE_URL = process.env.REACT_APP_BASE_URL;
 	const añadirPlanta = props.añadirPlanta;
 
 	/***************************************** */
 	//IMAGEN CLOUDINARY
 	const [imageSelected, setImageSelected] = useState("");
-	const cloud_name = "blomia";
+	const cloud_name = process.env.REACT_APP_CLOUD_NAME;
 	let imgURL = "";
-	let uploadPreset = "aj6y3r0q";
+	const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
 	const [nuevaEntrada, setNuevaEntrada] = useState({
 		Nombre: "",
@@ -62,7 +63,7 @@ function Formulario(props) {
 		e.preventDefault();
 		//comprobamos que no exista esa referencia en la BD
 		try {
-			const response = await axios(`http://localhost:5000/plantas/comprobar/${nuevaEntrada.Referencia}`);
+			const response = await axios(`${BASE_URL}/comprobar/${nuevaEntrada.Referencia}`);
 			// console.log(response.data);
 			let guardamos = response.data;
 
@@ -79,6 +80,7 @@ function Formulario(props) {
 					theme: "colored",
 					autoClose: 5000,
 				});
+				document.getElementById("referencia").value = "";
 			}
 		} catch (error) {
 			console.log("Error al comprobar");
@@ -86,8 +88,8 @@ function Formulario(props) {
 	};
 	/***********************************************/
 
-	const PROBANDO = async () => {
-		toast.error("Ya existe una planta con esta referencia.", {
+	const PROBANDO = () => {
+		toast.warn("Probando", {
 			theme: "colored",
 			autoClose: 5000,
 		});
@@ -129,8 +131,12 @@ function Formulario(props) {
 		});
 	};
 	const uploadImage = async () => {
-		if (!imageSelected) return alert("Selecciona una imagen");
-		console.log("imageSelected", imageSelected);
+		if (!imageSelected)
+			return toast.warn("Ya existe una planta con esta referencia.", {
+				theme: "colored",
+				autoClose: 5000,
+			});
+		// console.log("imageSelected", imageSelected);
 
 		const formData = new FormData();
 		formData.append("file", imageSelected);
@@ -154,11 +160,11 @@ function Formulario(props) {
 	return (
 		<div className="container">
 			<div className="cuerpo">
+				{/* <button onClick={PROBANDO}>PROBANDO</button> */}
 				<form type="" onSubmit={comprobarPlanta} encType="multipart/form-data" className="formulario bg-success mb-3">
 					<h2 className="tituloTarjeta" onClick={limpiarForm}>
 						Crear Nueva Referencia
 					</h2>
-					<button onClick={PROBANDO}>PROBANDO</button>
 
 					{!imageSelected ? (
 						<>
@@ -179,7 +185,7 @@ function Formulario(props) {
 					)}
 					<>
 						<input type="text" placeholder="Nombre" className="form-control" onChange={handleInput} name="Nombre" required />
-						<input type="text" placeholder="Referencia" className="form-control" onChange={handleInput} name="Referencia" required />
+						<input type="text" placeholder="Referencia" className="form-control" onChange={handleInput} id="referencia" name="Referencia" required />
 						<input type="text" placeholder="Tamaño" className="form-control" onChange={handleInput} name="Tamaño" />
 						<input type="number" placeholder="Stock" className="form-control" onChange={handleInput} name="Stock" />
 						<div>
