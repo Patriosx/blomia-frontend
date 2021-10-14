@@ -1,6 +1,6 @@
 // import "./Tarjetas.css";
 import * as React from "react";
-import Borrar from "./Borrar";
+import Eliminar from "./Eliminar";
 import Editar from "./Editar";
 
 function Tarjetas(props) {
@@ -9,9 +9,9 @@ function Tarjetas(props) {
 	const modificar = props.modificar;
 
 	return (
-		<div className="col-md">
+		<div className="col-md-6 col-lg-4">
 			<div key={planta._id} id="" className="card text-white bg-primary mb-2">
-				<Borrar planta={planta} eliminar={eliminar} />
+				<Eliminar planta={planta} eliminar={eliminar} />
 				<div>
 					<div className="m-2">
 						<img src={planta.Foto} alt="" className="img-fluid card" />

@@ -196,9 +196,9 @@ function Formulario(props) {
 						</div>
 						{/* este input precio es de prueba--------------------------------------------------------------- */}
 
-						<div className="precios">
+						<div className="">
 							<h3>PRECIOS</h3>
-							<div className="d-flex flex-wrap flex-sm-nowrap justify-content-center">
+							<div className="d-flex flex-wrap flex-sm-nowrap justify-content-center precios">
 								<input type="number" step="0.01" className="form-control" placeholder="Cliente 1" aria-label="Username" onChange={handlePrecios} name="cliente1" />
 								<input type="number" step="0.01" className="form-control" placeholder="Cliente 2" aria-label="Username" onChange={handlePrecios} name="cliente2" />
 								<input type="number" step="0.01" className="form-control" placeholder="Cliente 3" aria-label="Username" onChange={handlePrecios} name="cliente3" />

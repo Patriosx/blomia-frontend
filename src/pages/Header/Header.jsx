@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
 	return (
-		<div className="container-fluid">
-			<div className="d-flex justify-content-evenly m-2">
+		<div className="container-fluid mb-4">
+			<div className="btn-group">
 				<NavLink className="btn btn-outline-success" to="/crear" exact activeClassName="active">
 					<h3>Registrar nueva planta</h3>
 				</NavLink>

@@ -27,7 +27,9 @@ const Borrar = (props) => {
 
 	return (
 		<div className="eliminar m-1">
-			<button type="submit" id="borrar" onClick={handleClickOpen} className="fas fa-times btn btn-danger"></button>
+			<button type="submit" id="borrar" onClick={handleClickOpen} className="btn btn-danger">
+				🗑
+			</button>
 			<Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
 				<DialogTitle id="alert-dialog-title">
 					<p id="alertTitle">Confirme eliminacion de planta</p>

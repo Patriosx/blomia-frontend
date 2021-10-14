@@ -173,9 +173,9 @@ function App() {
 
 						<Route exact path="/mostrar">
 							<div className="container">
-								<form id="inicio">
-									<input type="text" name="busca" icon="search" id="busca" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
-								</form>
+								<div className="d-flex justify-content-center mb-4">
+									<input type="text" name="busca" icon="search" id="" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
+								</div>
 							</div>
 							<div className="container-fluid">
 								{/* Busca las plantas: carga la busqueda o todas las plantasss */}

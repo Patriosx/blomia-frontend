@@ -14,15 +14,19 @@
 }
 
 .eliminar {
-	display: flex;
-	justify-content: flex-end !important;
+	/* display: flex; */
+	/* justify-content: flex-end !important; */
+	left: 84%;
+	top: 8px;
+	position: absolute;
+	z-index: 100;
 }
 
 #borrar {
-	width: 15% !important;
-	font-size: 16px;
-	margin-left: 20%;
-	border-radius: 15px;
+	/* width: 15% !important; */
+	font-size: 0.8rem;
+	/* margin-left: 20%; */
+	border-radius: 20%;
 }
 
 #tarjeta {
