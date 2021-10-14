@@ -8,6 +8,7 @@ import Registrarse from "./pages/Registrarse/Registrarse.jsx";
 import Login from "./pages/Login/Login.jsx";
 import "./App.css";
 import axios from "axios";
+import MostrarTarjetas from "./pages/Tarjetas/MostrarTarjetas.jsx";
 
 function App() {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -113,7 +114,6 @@ function App() {
 			Tamaño: planta.Tamaño,
 			Stock: planta.Stock,
 			Activo: planta.Activo,
-			Tipo: planta.Tipo,
 			Precio: planta.Precio,
 		});
 
@@ -156,10 +156,6 @@ function App() {
 		}
 		console.log(datosRecuperar);
 	}, []); */
-	// UseEffect para que se realice la peticion solo una vez
-	/* 	useEffect((e) => {
-		console.log(e);
-	}, []); */
 
 	return (
 		<div className="App">
@@ -177,18 +173,7 @@ function App() {
 									<input type="text" name="busca" icon="search" id="" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
 								</div>
 							</div>
-							<div className="container-fluid">
-								{/* Busca las plantas: carga la busqueda o todas las plantasss */}
-								<div className="row tarjetas">
-									{searchInput.length > 1
-										? filteredResults.map((item) => {
-												return <Tarjetas key={item._id} planta={item} eliminar={eliminarPlanta} modificar={modificarPlanta} />;
-										  })
-										: listaPlantas.map((planta) => {
-												return <Tarjetas key={planta._id} planta={planta} eliminar={eliminarPlanta} modificar={modificarPlanta} />;
-										  })}
-								</div>
-							</div>
+							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} />
 						</Route>
 					</Switch>
 				</main>

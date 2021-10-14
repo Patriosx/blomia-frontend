@@ -16,7 +16,9 @@ function Tarjetas(props) {
 					<div className="m-2">
 						<img src={planta.Foto} alt="" className="img-fluid card" />
 					</div>
-					<h3 id="">{planta.Nombre}</h3>
+					<h3 id="" className="fw-bold">
+						{planta.Nombre}
+					</h3>
 				</div>
 				<div>
 					<p>Referencia:{planta.Referencia}</p>
@@ -32,7 +34,7 @@ function Tarjetas(props) {
 						<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
 					</select>
 				</div>
-				<Editar plant={planta} modificar={modificar} />
+				<Editar planta={planta} modificar={modificar} />
 			</div>
 		</div>
 	);

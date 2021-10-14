@@ -1,4 +1,4 @@
-#editar {
+#btnEditar {
 	width: 70% !important;
 }
 
@@ -36,9 +36,6 @@
 
 #alert-dialog-title {
 	background: #007385 !important;
-}
-
-#alertTitle {
 	color: #fff;
 }
 
@@ -49,6 +46,7 @@
 
 #botones {
 	font-weight: bold !important;
+	margin-right: 0.5rem;
 }
 
 .card .text-white .bg-primary .mb-3 {
@@ -56,26 +54,13 @@
 }
 
 .form {
-	display: flex;
-	flex-direction: column;
-	row-gap: 10px;
+	row-gap: 1rem;
 }
-/*
-.contenido {
-	display: flex !important;
-	flex-wrap: wrap-reverse !important;
-	flex-direction: row-reverse !important;
-	align-items: flex-start !important;
-	justify-content: space-around !important;
-	width: auto !important;
+.form input {
+	/* margin-bottom: 0.5rem; */
+	align-self: center;
+	margin: 0 auto 0.5rem auto;
 }
-*/
-/*
-.juntar {
-	justify-content: space-around !important;
-}
-*/
-
-.tarjetas {
-	/* max-width: 600px; */
+#formedit {
+	/* width: 100% !important; */
 }
