@@ -4,7 +4,6 @@ import Header from "./pages/Header/Header.jsx";
 import Formulario from "./pages/Formulario/Formulario.jsx";
 import * as React from "react";
 import Tarjetas from "./pages/Tarjetas/Tarjetas.jsx";
-import Busqueda from "./pages/Busqueda/Busqueda.jsx";
 import Registrarse from "./pages/Registrarse/Registrarse.jsx";
 import Login from "./pages/Login/Login.jsx";
 import "./App.css";
@@ -32,26 +31,25 @@ function App() {
 		);
 	};
 
+	useEffect(() => {
+		recuperaDatos();
+	}, []);
+
 	// ----------------------------Get Principal---------------------------------
 
 	const url = "http://localhost:5000/plantas";
-	const [newResultado, setResultado] = useState([]);
+	const [listaPlantas, setListaPlantas] = useState([]);
 
 	const recuperaDatos = async () => {
 		try {
 			let respuesta = await fetch(url);
 			let resultado = await respuesta.json();
-			// setResultado(resultado.respuesta);
-			setResultado(resultado.respuesta);
+			setListaPlantas(resultado.respuesta);
 			// return(resultado.respuesta)
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
-	useEffect(() => {
-		recuperaDatos();
-	}, []);
 
 	// ----------------------------Funcion Añadir---------------------------------
 
@@ -140,12 +138,12 @@ function App() {
 	const searchItems = (searchValue) => {
 		setSearchInput(searchValue);
 		if (searchInput !== "") {
-			const filteredData = newResultado.filter((item) => {
+			const filteredData = listaPlantas.filter((item) => {
 				return Object.values(item).join("").toLowerCase().includes(searchInput.toLowerCase());
 			});
 			setFilteredResults(filteredData);
 		} else {
-			setFilteredResults(newResultado);
+			setFilteredResults(listaPlantas);
 		}
 	};
 
@@ -165,33 +163,32 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				<Switch>
-					<Route>{/* <Header /> */}</Route>
-					<Route exact path="/blomia/login">
-						<Login gestionarAcceso={gestionarAcceso} />
-					</Route>
-					<Route exact path="/blomia/alta">
-						<Registrarse gestionarAcceso={gestionarAcceso} />
-					</Route>
-				</Switch>
-			</Router>
-			<Formulario añadirPlanta={añadirPlanta} />
+				<Header />
+				<main>
+					<Switch>
+						<Route exact path="/crear">
+							<Formulario añadirPlanta={añadirPlanta} />
+						</Route>
 
-			<div className="juntar">
-				<form id="inicio">
-					<input type="text" name="busca" icon="search" id="busca" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
-				</form>
-				<div className="contenido">
-					{searchInput.length > 1
-						? filteredResults.map((item) => {
-								return <Busqueda key={item._id} listaPlantas={item} eliminar={eliminarPlanta} modificar={modificarPlanta} />;
-						  })
-						: newResultado.map((e) => {
-								return <Tarjetas key={e._id} listaPlantas={e} eliminar={eliminarPlanta} modificar={modificarPlanta} />;
-						  })}
-				</div>
-			</div>
-			{/* <MuestraDatos listaPlantas={newResultado} eliminarP={eliminarPlanta} modificarP={modificarPlanta}/>   */}
+						<Route exact path="/mostrar">
+							<div className="juntar">
+								<form id="inicio">
+									<input type="text" name="busca" icon="search" id="busca" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
+								</form>
+								<div className="contenido">
+									{searchInput.length > 1
+										? filteredResults.map((item) => {
+												return <Tarjetas key={item._id} planta={item} eliminar={eliminarPlanta} modificar={modificarPlanta} />;
+										  })
+										: listaPlantas.map((planta) => {
+												return <Tarjetas key={planta._id} planta={planta} eliminar={eliminarPlanta} modificar={modificarPlanta} />;
+										  })}
+								</div>
+							</div>
+						</Route>
+					</Switch>
+				</main>
+			</Router>
 		</div>
 	);
 }
