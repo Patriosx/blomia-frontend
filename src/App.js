@@ -103,7 +103,7 @@ function App() {
 
 	// ----------------------------Funcion Modificar---------------------------------
 
-	const modificarPlanta = async (planta) => {
+	const modificarPlanta = async (planta, id) => {
 		var myHeaders = new Headers();
 		myHeaders.append("Content-Type", "application/json");
 
@@ -124,13 +124,22 @@ function App() {
 			redirect: "follow",
 		};
 
-		await fetch(`${BASE_URL}/modificar/${planta.Nombre}`, requestOptions)
+		await fetch(`${BASE_URL}/modificar/${id}`, requestOptions)
 			.then((response) => response.text())
 			.catch((error) => console.log("error", error));
 
 		recuperaDatos();
 	};
 
+	const cambiarActivo = async (id) => {
+		try {
+			const respuesta = await axios(`${BASE_URL}/activo/${id}`);
+			console.log("Client: Activo cambiado");
+		} catch (error) {
+			console.log(error);
+		}
+		recuperaDatos();
+	};
 	//------------------------------------------Funcion Buscar 2.0------------------------------------------------------------------
 
 	const [filteredResults, setFilteredResults] = useState([]);
@@ -173,7 +182,7 @@ function App() {
 									<input type="text" name="busca" icon="search" id="" placeholder="Buscar planta..." onChange={(e) => searchItems(e.target.value)} className="form-control" />
 								</div>
 							</div>
-							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} />
+							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} />
 						</Route>
 					</Switch>
 				</main>

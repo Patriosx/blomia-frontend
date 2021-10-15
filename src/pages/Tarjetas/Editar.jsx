@@ -11,12 +11,12 @@ const Editar = (props) => {
 	const planta = props.planta;
 	const modificar = props.modificar;
 	const [open2, setOpen2] = useState(false);
-	console.log("planta editar", planta);
+	// console.log("planta editar", planta);
+
 	const [plantaModificada, setPlantaModificada] = useState({
 		Nombre: "",
 		Referencia: "",
 		Tamaño: "",
-		Activo: "",
 		Stock: "",
 		Precio: "",
 	});
@@ -34,9 +34,6 @@ const Editar = (props) => {
 			[event.target.name]: event.target.value,
 		});
 	};
-	const handleActivoModificados = (event) => {
-		setPlantaModificada({ ...plantaModificada, [event.target.name]: document.getElementById("checkbox").checked ? true : false });
-	};
 	const handlePreciosModificados = (event) => {
 		setPreciosModificados({
 			...preciosModificados,
@@ -46,12 +43,22 @@ const Editar = (props) => {
 	const handleClickOpen2 = () => {
 		setOpen2(true);
 	};
-
 	const handleClose2 = () => {
 		setOpen2(false);
 	};
 	const submitEditar = (e) => {
 		e.preventDefault();
+		/**/
+		const nuevaPlanta = {
+			Nombre: plantaModificada.Nombre,
+			Referencia: plantaModificada.Referencia,
+			Tamaño: plantaModificada.Tamaño,
+			Stock: plantaModificada.Stock,
+			Precio: [preciosModificados.cliente1, preciosModificados.cliente2, preciosModificados.cliente3, preciosModificados.cliente4],
+			// Foto: imgURL,
+		};
+		/**/
+		modificar(nuevaPlanta, planta._id);
 	};
 	return (
 		<div id="">
@@ -63,7 +70,7 @@ const Editar = (props) => {
 					Editar Referencia
 				</DialogTitle>
 				<DialogContent>
-					<form encType="multipart/form-data" className="form ">
+					<form onSubmit={submitEditar} encType="multipart/form-data" className="form ">
 						<label htmlFor="">Seleccione imagen de planta</label>
 						{/* <input type="file" id="" accept="image/*" className="form-control" /> */}
 						<div className="datos">
@@ -72,13 +79,7 @@ const Editar = (props) => {
 							<input type="text" placeholder="Tamaño" className="form-control" onChange={handleInputModificados} name="Tamaño" />
 							<input type="number" placeholder="Stock" className="form-control" onChange={handleInputModificados} name="Stock" />
 						</div>
-						{/* INPUT CHECKBOX ACTIVO */}
-						<div>
-							<label htmlFor="checkBox">
-								Referencia Activa
-								<input type="checkbox" id="checkbox" onChange={handleActivoModificados} name="Activo" />
-							</label>
-						</div>
+
 						{/* INPUT PRECIOS */}
 						<div className="">
 							<h3 className="text-center">PRECIOS</h3>
@@ -92,9 +93,9 @@ const Editar = (props) => {
 							<div onClick={handleClose2} className="btn btn-danger" id="botones">
 								Cancelar
 							</div>
-							<div onClick={handleClose2} type="submit" className="btn btn-warning" id="botones">
+							<button onClick={handleClose2} type="submit" className="btn btn-warning" id="botones">
 								Editar
-							</div>
+							</button>
 						</div>
 					</form>
 				</DialogContent>

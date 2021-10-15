@@ -1,3 +1,9 @@
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 // import "./Tarjetas.css";
 import * as React from "react";
 import Eliminar from "./Eliminar";
@@ -7,6 +13,16 @@ function Tarjetas(props) {
 	const planta = props.planta;
 	const eliminar = props.eliminar;
 	const modificar = props.modificar;
+	const cambiarActivo = props.cambiarActivo;
+
+	/***  Dialog ***/
+	const [open, setOpen] = React.useState(false);
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	return (
 		<div className="col-md-6 col-lg-4">
@@ -24,7 +40,9 @@ function Tarjetas(props) {
 					<p>Referencia:{planta.Referencia}</p>
 					<p>Tamaño:{planta.Tamaño}</p>
 					<p>Stock:{planta.Stock}</p>
-					<p>Activo:{planta.Activo ? "SI" : "NO"}</p>
+					<p className={planta.Activo ? "btn btn-outline-danger" : "btn btn-outline-info"} onClick={handleClickOpen}>
+						Activo: {planta.Activo ? "SI" : "NO"}
+					</p>
 					<p>Cliente:</p>
 					<select name="cliente" id="categorias" className="form-control text-center">
 						<option value="-1">--Elige una opción--</option>
@@ -36,6 +54,32 @@ function Tarjetas(props) {
 				</div>
 				<Editar planta={planta} modificar={modificar} />
 			</div>
+
+			<Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+				<DialogTitle id="alert-dialog-title">
+					<p id="alertTitle">Confirme cambio de estado Activo de la planta</p>
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						<p id="alert">¿Esta seguro de que desea Cambiar el estado de {planta.Nombre}?</p>
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose} id="botones">
+						No
+					</Button>
+					<Button
+						onClick={() => {
+							cambiarActivo(planta._id);
+							handleClose();
+						}}
+						autoFocus
+						id="botones"
+					>
+						Si
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>
 	);
 }
