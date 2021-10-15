@@ -170,7 +170,7 @@ function App() {
 						<Route exact path="/mostrar">
 							<div className="container">
 								<div className="d-flex justify-content-center mb-4">
-									<input type="text" name="busca" icon="search" id="" placeholder="Buscar por Nombre" onChange={(e) => searchItems(e.target.value)} className="form-control" />
+									<input type="text" name="busca" icon="search" id="" placeholder="Buscar planta..." onChange={(e) => searchItems(e.target.value)} className="form-control" />
 								</div>
 							</div>
 							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} />
