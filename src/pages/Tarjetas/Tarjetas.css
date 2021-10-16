@@ -29,11 +29,6 @@
 	border-radius: 20%;
 }
 
-#tarjeta {
-	width: 350px !important;
-	height: 400px !important;
-}
-
 #alert-dialog-title {
 	background: #007385 !important;
 	color: #fff;

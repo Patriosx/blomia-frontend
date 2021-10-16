@@ -30,7 +30,7 @@ function Tarjetas(props) {
 				<Eliminar planta={planta} eliminar={eliminar} />
 				<div>
 					<div className="m-2">
-						<img src={planta.Foto} alt="" className="img-fluid card" />
+						<img src={planta.Foto[0]} alt="" className="img-fluid card" />
 					</div>
 					<h3 id="" className="fw-bold">
 						{planta.Nombre}
@@ -56,13 +56,9 @@ function Tarjetas(props) {
 			</div>
 
 			<Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-				<DialogTitle id="alert-dialog-title">
-					<p id="alertTitle">Confirme cambio de estado Activo de la planta</p>
-				</DialogTitle>
+				<DialogTitle id="alert-dialog-title">{/* <p id="alertTitle">Confirme cambio de estado Activo de la planta</p> */}Desea cambiar de estado Activo de la planta</DialogTitle>
 				<DialogContent>
-					<DialogContentText id="alert-dialog-description">
-						<p id="alert">¿Esta seguro de que desea Cambiar el estado de {planta.Nombre}?</p>
-					</DialogContentText>
+					<DialogContentText id="alert-dialog-description">¿Esta seguro de que desea Cambiar el estado de {planta.Nombre}</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} id="botones">

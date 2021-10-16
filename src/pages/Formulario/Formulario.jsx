@@ -18,6 +18,7 @@ function Formulario(props) {
 	const [imageSelected, setImageSelected] = useState("");
 	const cloud_name = process.env.REACT_APP_CLOUD_NAME;
 	let imgURL = "";
+	let publicID = "";
 	const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
 	const [nuevaEntrada, setNuevaEntrada] = useState({
@@ -52,7 +53,7 @@ function Formulario(props) {
 			Stock: nuevaEntrada.Stock,
 			Activo: nuevaEntrada.Activo,
 			Precio: [precios.cliente1, precios.cliente2, precios.cliente3, precios.cliente4],
-			Foto: imgURL,
+			Foto: [imgURL, publicID],
 		};
 		// console.log("nuevaPlanta", nuevaPlanta);
 		//se guarda la nueva planta la base de datos
@@ -149,12 +150,14 @@ function Formulario(props) {
 				console.log("response", response);
 				// if (response.status === 200) alert("Imagen subida correctamente");
 				imgURL = response.data.secure_url;
+				publicID = response.data.public_id;
 				document.querySelector(".form-control").value = null;
 			})
 			.catch((e) => {
 				console.log(e);
 			});
-		console.log(imgURL);
+		// console.log(imgURL);
+		// console.log(publicID);
 	};
 
 	return (

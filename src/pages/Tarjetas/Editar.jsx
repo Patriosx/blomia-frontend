@@ -12,6 +12,8 @@ const Editar = (props) => {
 	const modificar = props.modificar;
 	const [open2, setOpen2] = useState(false);
 	// console.log("planta editar", planta);
+	let imgURL = "";
+	let publicID = "";
 
 	const [plantaModificada, setPlantaModificada] = useState({
 		Nombre: "",
@@ -20,7 +22,6 @@ const Editar = (props) => {
 		Stock: "",
 		Precio: "",
 	});
-
 	const [preciosModificados, setPreciosModificados] = useState({
 		cliente1: "",
 		cliente2: "",
@@ -55,7 +56,7 @@ const Editar = (props) => {
 			Tamaño: plantaModificada.Tamaño,
 			Stock: plantaModificada.Stock,
 			Precio: [preciosModificados.cliente1 ? preciosModificados.cliente1 : planta.Precio[0], preciosModificados.cliente2 ? preciosModificados.cliente2 : planta.Precio[1], preciosModificados.cliente3 ? preciosModificados.cliente3 : planta.Precio[2], preciosModificados.cliente4 ? preciosModificados.cliente4 : planta.Precio[3]],
-			// Foto: imgURL,
+			Foto: planta.Foto ? planta.Foto : [imgURL, publicID],
 		};
 		/**/
 		modificar(nuevaPlanta, planta._id);
