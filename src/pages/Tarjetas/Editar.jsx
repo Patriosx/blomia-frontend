@@ -54,15 +54,24 @@ const Editar = (props) => {
 			Referencia: plantaModificada.Referencia,
 			Tamaño: plantaModificada.Tamaño,
 			Stock: plantaModificada.Stock,
-			Precio: [preciosModificados.cliente1, preciosModificados.cliente2, preciosModificados.cliente3, preciosModificados.cliente4],
+			Precio: [preciosModificados.cliente1 ? preciosModificados.cliente1 : planta.Precio[0], preciosModificados.cliente2 ? preciosModificados.cliente2 : planta.Precio[1], preciosModificados.cliente3 ? preciosModificados.cliente3 : planta.Precio[2], preciosModificados.cliente4 ? preciosModificados.cliente4 : planta.Precio[3]],
 			// Foto: imgURL,
 		};
 		/**/
 		modificar(nuevaPlanta, planta._id);
+		console.log("nuevaPlanta", nuevaPlanta);
+		console.log(nuevaPlanta.Precio, nuevaPlanta.Precio.length);
 	};
 	return (
 		<div id="">
-			<button id="btnEditar" className="btn btn-warning m-3" onClick={handleClickOpen2}>
+			<button
+				id="btnEditar"
+				className="btn btn-warning m-3"
+				onClick={() => {
+					handleClickOpen2();
+					console.log("planta editar", planta);
+				}}
+			>
 				Editar Campos
 			</button>
 			<Dialog open={open2} onClose={handleClose2} id="" fullWidth>
