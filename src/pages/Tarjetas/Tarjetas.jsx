@@ -27,7 +27,7 @@ function Tarjetas(props) {
 	};
 
 	return (
-		<div className="col col-sm-6 col-xl-4 mx-auto tarjeta">
+		<div className="col col-md-6 col-xl-4 mx-auto tarjeta">
 			<div key={planta._id} id="" className="card text-white bg-primary mb-2">
 				{tieneAcceso ? <Eliminar planta={planta} eliminar={eliminar} datoStorage={datoStorage} /> : ""}
 
