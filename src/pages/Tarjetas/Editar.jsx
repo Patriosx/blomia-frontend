@@ -69,7 +69,7 @@ const Editar = (props) => {
 				className="btn btn-warning mb-3"
 				onClick={() => {
 					handleClickOpen2();
-					console.log("planta editar", planta);
+					// console.log("planta editar", planta);
 				}}
 			>
 				Editar Campos

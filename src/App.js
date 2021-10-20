@@ -22,7 +22,7 @@ function App() {
 	let datosLog = "";
 	const gestionarAcceso = async (login) => {
 		await axios
-			.post("http://localhost:5000/usuarios/login", login)
+			.post(`${BASE_URL}/usuarios/login/`, login)
 			.then((response) => response.data)
 			.then((data) => {
 				// Usuario logeado correctamente
@@ -63,7 +63,7 @@ function App() {
 
 	const recuperaDatos = async () => {
 		try {
-			let respuesta = await fetch(BASE_URL);
+			let respuesta = await fetch(BASE_URL + "/plantas");
 			let resultado = await respuesta.json();
 			setListaPlantas(resultado.respuesta);
 			// return(resultado.respuesta)
@@ -96,9 +96,8 @@ function App() {
 			redirect: "follow",
 		};
 
-		await fetch(BASE_URL, requestOptions)
+		await fetch(BASE_URL + "/plantas", requestOptions)
 			.then((response) => response.text())
-			// .then((result) => console.log(result))
 			.catch((error) => console.log("error", error));
 
 		recuperaDatos();
@@ -107,7 +106,7 @@ function App() {
 	// ----------------------------Get Eliminar---------------------------------
 
 	const eliminarPlanta = async (_id, token) => {
-		console.log(datosLog);
+		// console.log(datosLog);
 		var requestOptions = {
 			method: "DELETE",
 			redirect: "follow",
@@ -116,9 +115,8 @@ function App() {
 			},
 		};
 
-		await fetch(`${BASE_URL}/eliminar/` + _id, requestOptions)
+		await fetch(`${BASE_URL}/plantas/eliminar/` + _id, requestOptions)
 			.then((response) => response.text())
-			// .then((result) => console.log(result))
 			.catch((error) => console.log("error", error));
 
 		recuperaDatos();
@@ -148,7 +146,7 @@ function App() {
 			redirect: "follow",
 		};
 
-		await fetch(`${BASE_URL}/modificar/${id}`, requestOptions)
+		await fetch(`${BASE_URL}/plantas/modificar/${id}`, requestOptions)
 			.then((response) => response.text())
 			.catch((error) => console.log("error", error));
 
@@ -157,7 +155,7 @@ function App() {
 
 	const cambiarActivo = async (id) => {
 		try {
-			const respuesta = await axios(`${BASE_URL}/activo/${id}`);
+			await axios(`${BASE_URL}/plantas/activo/${id}`);
 			console.log("Client: Activo cambiado");
 		} catch (error) {
 			console.log(error);

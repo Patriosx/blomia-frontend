@@ -62,7 +62,7 @@ function Formulario(props) {
 		e.preventDefault();
 		//comprobamos que no exista esa referencia en la BD
 		try {
-			const response = await axios(`${BASE_URL}/comprobar/${nuevaEntrada.Referencia}`);
+			const response = await axios(`${BASE_URL}/plantas/comprobar/${nuevaEntrada.Referencia}`);
 			// console.log(response.data);
 			let guardamos = response.data;
 
