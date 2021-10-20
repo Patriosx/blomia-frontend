@@ -41,7 +41,7 @@ const Header = () => {
 					""
 				)}
 			</div>
-			<ConfirmarDialog titulo="Confirmar cerrar sesión" contenido="¿Desea cerran la sesión?" open={open} setOpen={setOpen} funcion={cerrarSesion} />
+			<ConfirmarDialog titulo="Confirmar cerrar sesión" contenido="¿Desea cerrar la sesión?" open={open} setOpen={setOpen} funcion={cerrarSesion} />
 		</div>
 	);
 };

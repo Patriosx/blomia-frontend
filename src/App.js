@@ -12,14 +12,6 @@ import { ToastContainer, toast } from "react-toastify";
 function App() {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-	// Define en una variable booleana si el usuario tiene o no acceso
-	const [tieneAcceso, setTieneAcceso] = useState(false);
-	// define los datos del acceso del usuario (nombre,email,password)
-	const [datos, setDatos] = useState({});
-	// Obtiene el token del usuario si se ha logueado correctamente
-	const [token, setToken] = useState();
-	// Traemos desde el componente Login los datos del usuario enviados desde el servidor mediante esta función prop
-
 	const gestionarAcceso = async (login) => {
 		await axios
 			.post(`${BASE_URL}/usuarios/login/`, login)
@@ -27,9 +19,6 @@ function App() {
 			.then((data) => {
 				// Usuario logeado correctamente
 				console.log("Usuario logeado", data);
-				// setDatos(data); // datos del usuario: email, password y token
-				// setTieneAcceso(true); // La variable que indica que está logueado se pone a true
-				setToken(data.token);
 				window.location.href = "/crear";
 				// Para que persista el token y no se borre al recargar la pagina lo guardamos en formato texto en el localstorage
 				localStorage.setItem(
@@ -39,7 +28,6 @@ function App() {
 						token: data.token,
 					})
 				);
-				// datosLog = JSON.parse(localStorage.getItem("usuario_blomia"));
 			})
 			.catch((err) => {
 				console.log("Error al iniciar sesión");
@@ -125,9 +113,6 @@ function App() {
 	// ----------------------------Funcion Modificar---------------------------------
 
 	const modificarPlanta = async (planta, id, token) => {
-		var myHeaders = new Headers();
-		// myHeaders.append({ "Content-Type": "application/json", Authorization: "Bearer " + token });
-
 		var raw = JSON.stringify({
 			Foto: planta.Foto,
 			Nombre: planta.Nombre,
@@ -193,6 +178,7 @@ function App() {
 			<Router>
 				<main className="mx-auto">
 					<Switch>
+						{/* <Header /> */}
 						<Route exact path="/crear">
 							<Header />
 							<Formulario añadirPlanta={añadirPlanta} />
@@ -206,7 +192,10 @@ function App() {
 								</div>
 							</div>
 
-							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} tieneAcceso={tieneAcceso} />
+							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} />
+						</Route>
+						<Route exact path="/menu">
+							<Header />
 						</Route>
 						<Route>
 							<Login exact path="/" gestionarAcceso={gestionarAcceso} />
