@@ -5,9 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Formulario.css";
 import "core-js";
-import { Image } from "cloudinary-react";
 import Foto from "./Foto";
-// const cloudinary = require("cloudinary").v2;
 
 function Formulario(props) {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;

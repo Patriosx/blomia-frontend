@@ -14,6 +14,8 @@ function Tarjetas(props) {
 	const eliminar = props.eliminar;
 	const modificar = props.modificar;
 	const cambiarActivo = props.cambiarActivo;
+	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
+	const tieneAcceso = datoStorage ? true : false;
 
 	/***  Dialog ***/
 	const [open, setOpen] = React.useState(false);
@@ -25,17 +27,18 @@ function Tarjetas(props) {
 	};
 
 	return (
-		<div className="col-md-6 col-lg-4">
+		<div className="col col-sm-6 col-xl-4 mx-auto tarjeta">
 			<div key={planta._id} id="" className="card text-white bg-primary mb-2">
-				<Eliminar planta={planta} eliminar={eliminar} />
-				<div>
-					<div className="m-2">
-						<img src={planta.Foto[0]} alt="" className="img-fluid card" />
-					</div>
-					<h3 id="" className="fw-bold">
-						{planta.Nombre}
-					</h3>
+				{tieneAcceso ? <Eliminar planta={planta} eliminar={eliminar} datoStorage={datoStorage} /> : ""}
+
+				{/* <div> */}
+				<div className="m-2">
+					<img src={planta.Foto[0]} alt="" className="img-fluid card" />
 				</div>
+				<h3 id="" className="fw-bold">
+					{planta.Nombre}
+				</h3>
+				{/* </div> */}
 				<div>
 					<p>Referencia:{planta.Referencia}</p>
 					<p>Tamaño:{planta.Tamaño}</p>
@@ -43,16 +46,18 @@ function Tarjetas(props) {
 					<p className={planta.Activo ? "btn btn-outline-danger" : "btn btn-outline-info"} onClick={handleClickOpen}>
 						Activo: {planta.Activo ? "SI" : "NO"}
 					</p>
-					<p>Cliente:</p>
-					<select name="cliente" id="categorias" className="form-control text-center">
-						<option value="-1">--Elige una opción--</option>
-						<option value="0">Categoría 1: {planta.Precio[0] ? `${planta.Precio[0]} €` : "No tiene precio"}</option>
-						<option value="1">Categoría 2: {planta.Precio[1] ? `${planta.Precio[1]} €` : "No tiene precio"}</option>
-						<option value="2">Categoría 3: {planta.Precio[2] ? `${planta.Precio[2]} €` : "No tiene precio"}</option>
-						<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
-					</select>
+					<div className="mb-3">
+						<p>Cliente:</p>
+						<select name="cliente" id="categorias" className="form-control text-center">
+							<option value="-1">--Elige una opción--</option>
+							<option value="0">Categoría 1: {planta.Precio[0] ? `${planta.Precio[0]} €` : "No tiene precio"}</option>
+							<option value="1">Categoría 2: {planta.Precio[1] ? `${planta.Precio[1]} €` : "No tiene precio"}</option>
+							<option value="2">Categoría 3: {planta.Precio[2] ? `${planta.Precio[2]} €` : "No tiene precio"}</option>
+							<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
+						</select>
+					</div>
 				</div>
-				<Editar planta={planta} modificar={modificar} />
+				{tieneAcceso ? <Editar planta={planta} datoStorage={datoStorage} modificar={modificar} /> : ""}
 			</div>
 
 			<Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">

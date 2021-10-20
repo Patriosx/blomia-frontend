@@ -1,5 +1,5 @@
 .App {
-	/* width: 100% !important; */
+	width: 100% !important;
 	padding: 0;
 	margin: 0;
 	text-align: center;
@@ -11,7 +11,7 @@
 	flex-direction: row-reverse !important;
 	align-items: flex-start !important;
 	justify-content: space-around !important;
-	width: auto !important;
+	/* width: auto !important; */
 }
 
 .juntar {
@@ -29,4 +29,9 @@
 
 #busca {
 	box-shadow: 0px 0px 5px 1px #007385;
+}
+.entrar:hover {
+	color: #dc901b;
+	cursor: pointer;
+	transition: color 0.8s;
 }

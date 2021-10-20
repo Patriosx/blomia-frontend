@@ -1,90 +1,119 @@
-import React,{useState} from 'react';
-import {Router,Redirect,Link} from "react-router-dom";
-// Para los formularios
-import { useForm } from 'react-hook-form';
-// Para las peticiones
-import axios from "axios";
-// Importamos useHistory para manejar las redirecciones de las funciones cuando el usuario se registra o entra
-import { useHistory } from 'react-router';
-// CSS
-import "./Login.css";
+import React from "react";
+import "./login.css";
+import foto from "./images/logo-blomia.png";
+import { useState } from "react";
 
-const Login = (props) => {
-    const { gestionarAcceso } = props;
-    // variable de estado que indica si el usuario existe o no en la base de datos.
-	const [tieneAcceso, setTieneAcceso] = useState(false); 
-	// Variable para las redirecciones
-	const history = useHistory();
-    // Variables que se usan en los formularios de react
-    const {
-		register,
-		handleSubmit,
-		setValue,
-		formState: { errors },
-	} = useForm(); // hook del formulario para 'react-hook-form'
-	const[errorForm,setErrorForm] = useState("");
-    const onSubmit = async(data) =>{
-        // Envío de los datos del formulario ( data ) al servidor
-		// console.log(data);
-			await axios
-            .post('http://localhost:5000/api/tsundoku/usuarios/login', {
-                email: data.email,
-                password: data.password,
-            })
-            .then((response) => {
-                console.log('Login Correcto');
-                gestionarAcceso(response.data);
-                // Aqui, una vez logueado con exito lo redireccionamos al componente main por su ruta definida en el APP.js
-                history.push("/tsundoku/inicio");
-                // enviamos a la App la respuesta del servidor, que contiene el token creado por este
-            })
-            .catch((error) => {
-				setErrorForm(error.response.data.mensaje);	
-            });
+const Login = ({ gestionarAcceso }) => {
+	const [login, setLogin] = useState({
+		Nombre: "",
+		Password: "",
+	});
+	const handleInputs = (event) => {
+		setLogin({
+			...login,
+			[event.target.name]: event.target.value,
+		});
+	};
+	const submitForm = async (event) => {
+		event.preventDefault();
+		gestionarAcceso(login);
+	};
 
-    }
-    return (
-        <div className="divLogin">
-			<div className="formLogin">
-					<h2 className="log-title">Login</h2>
-				<form onSubmit={handleSubmit(onSubmit)} className="form">
-					<input
-						className="input-login"
-						type='text'
-						placeholder='Email'
-						{...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-					/>
-					{errors.email && errors.email.type === 'required' && (
-						<span className="warning">Se requiere e-mail válido</span>
-					)}
-					{errors.email && errors.email.type === 'pattern' && (
-						<span className="warning">Se requiere e-mail válido</span>
-					)}
-					<input
-						className="input-login"
-						type='password'
-						placeholder='Password'
-						{...register('password', { required: true, minLength: 8 })}
-					/>
-					{errors.password && errors.password.type === 'required' && (
-						<span className="warning">Se requiere contraseña</span>
-					)}
-					{errors.password && errors.password.type === 'minLength' && (
-						<span className="warning">Mínimo de 8 caracteres</span>
-					)}
-					<div className="botonesForm">
+	return (
+		<div className="container-fluid">
+			<div className="login-wrap">
+				<div className="login-html">
+					<input id="tab-1" type="radio" name="tab" className="sign-in" defaultChecked />
+					<label htmlFor="tab-1" className="tab">
+						Inicio Sesión
+					</label>
+					<input id="tab-2" type="radio" name="tab" className="sign-up" />
 
-						<button className="btn-login" type='submit'>Acceder</button>
-						<button className="btn-login"><Link to="/tsundoku/alta" className="enlace">Registrase</Link></button>
-						{/* <input type='submit' value="Registrarse"/> */}
+					<label htmlFor="" className="tab entrar" onClick={() => (window.location.href = "/crear")}>
+						ENTRAR
+					</label>
+
+					<div className="login-form">
+						<div className="sign-in-htm">
+							<form action="" onSubmit={submitForm}>
+								<div className="group">
+									<label htmlFor="user" className="label">
+										Usuario
+									</label>
+									<input id="user" type="text" className="input" name="Nombre" onChange={handleInputs} required />
+								</div>
+								<div className="group">
+									<label htmlFor="pass" className="label">
+										Contraseña
+									</label>
+									<input id="pass" type="password" className="input" data-type="password" name="Password" onChange={handleInputs} required />
+								</div>
+
+								{/* <div className="group">
+								<input id="check" type="checkbox" className="check" />
+								<label htmlFor="check">
+									<span className="icon"></span> Recuerda mis Datos
+								</label>
+							</div> */}
+
+								<div className="group">
+									<input type="submit" className="button" value="Iniciar Sesión" />
+								</div>
+								<div className="hr"></div>
+								{/* <div className="foot-lnk">
+								<a className="forgot-password" href="#forgot">
+									Has olvidado tu contraseña?
+								</a>
+							</div> */}
+								<div className="logo-blomia">
+									<img id="logo" src={foto} alt="foto" />
+								</div>
+							</form>
+						</div>
+						{/* Fomulario crear usuario */}
+						<div className="sign-up-htm">
+							<div className="group">
+								<label htmlFor="user-registro" className="label">
+									Nombre de usuario
+								</label>
+								<input id="user-registro" type="text" className="input" />
+							</div>
+							<div className="group">
+								<label htmlFor="pass-registro" className="label">
+									Contraseña
+								</label>
+								<input id="pass-registro" type="password" className="input" data-type="password" />
+							</div>
+							<div className="group">
+								<label htmlFor="pass-registro2" className="label">
+									Repita Contraseña
+								</label>
+								<input id="pass-registro2" type="password" className="input" data-type="password" />
+							</div>
+							<div className="group">
+								<label htmlFor="email-registro" className="label">
+									Email
+								</label>
+								<input id="email-registro" type="email" className="input" />
+							</div>
+							<div className="group">
+								<input type="submit" className="button" value="Sign Up" />
+							</div>
+							<div className="hr-1"></div>
+							<div className="foot-lnk">
+								<label id="already-member" htmlFor="tab-1">
+									Ya estas registrado?
+								</label>
+							</div>
+							<div className="logo-blomia-registro">
+								<img id="logo-registro" src={foto} alt="foto" />
+							</div>
+						</div>
 					</div>
-				</form>
-				{errorForm!=""?<div>{errorForm}</div>:null}
+				</div>
 			</div>
-			<div className="circle1"></div>
-    		<div className="circle2"></div>
-        </div>
-    )
-}
+		</div>
+	);
+};
 
-export default Login
+export default Login;

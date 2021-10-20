@@ -3,12 +3,11 @@ import { useState, useEffect } from "react";
 import Header from "./pages/Header/Header.jsx";
 import Formulario from "./pages/Formulario/Formulario.jsx";
 import * as React from "react";
-import Tarjetas from "./pages/Tarjetas/Tarjetas.jsx";
-import Registrarse from "./pages/Registrarse/Registrarse.jsx";
 import Login from "./pages/Login/Login.jsx";
 import "./App.css";
 import axios from "axios";
 import MostrarTarjetas from "./pages/Tarjetas/MostrarTarjetas.jsx";
+import { ToastContainer, toast } from "react-toastify";
 
 function App() {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -20,18 +19,38 @@ function App() {
 	// Obtiene el token del usuario si se ha logueado correctamente
 	const [token, setToken] = useState();
 	// Traemos desde el componente Login los datos del usuario enviados desde el servidor mediante esta función prop
-	const gestionarAcceso = (dato) => {
-		setDatos(dato); // datos del usuario: email, password y token
-		setTieneAcceso(true); // La variable que indica que está logueado se pone a true
-		setToken(dato.token); // Por si fuera necesario
-		// Para que persista el token y no se borre al recargar la pagina lo guardamos en formato texto en el localstorage
-		localStorage.setItem(
-			"userData",
-			JSON.stringify({
-				idUsuario: dato.idUsuario,
-				token: dato.token,
+	let datosLog = "";
+	const gestionarAcceso = async (login) => {
+		await axios
+			.post("http://localhost:5000/usuarios/login", login)
+			.then((response) => response.data)
+			.then((data) => {
+				// Usuario logeado correctamente
+				console.log("Usuario logeado", data);
+				// setDatos(data); // datos del usuario: email, password y token
+				// setTieneAcceso(true); // La variable que indica que está logueado se pone a true
+				setToken(data.token);
+				window.location.href = "/crear";
+				// Para que persista el token y no se borre al recargar la pagina lo guardamos en formato texto en el localstorage
+				localStorage.setItem(
+					"usuario_blomia",
+					JSON.stringify({
+						// idUsuario: datos.ID,
+						token: data.token,
+					})
+				);
+				datosLog = JSON.parse(localStorage.getItem("usuario_blomia"));
 			})
-		);
+			.catch((err) => {
+				console.log("Error al iniciar sesión");
+				console.log(err);
+				alert("Error al iniciar sesión");
+				// toast.warn("Error al iniciar sesión", {
+				// 	position: "bottom-left",
+				// 	theme: "colored",
+				// 	autoClose: 5000,
+				// });
+			});
 	};
 
 	useEffect(() => {
@@ -87,10 +106,14 @@ function App() {
 
 	// ----------------------------Get Eliminar---------------------------------
 
-	const eliminarPlanta = async (_id) => {
+	const eliminarPlanta = async (_id, token) => {
+		console.log(datosLog);
 		var requestOptions = {
 			method: "DELETE",
 			redirect: "follow",
+			headers: {
+				Authorization: "Bearer " + token, // En los headers van 'Bearer ' + token recibido
+			},
 		};
 
 		await fetch(`${BASE_URL}/eliminar/` + _id, requestOptions)
@@ -103,9 +126,9 @@ function App() {
 
 	// ----------------------------Funcion Modificar---------------------------------
 
-	const modificarPlanta = async (planta, id) => {
+	const modificarPlanta = async (planta, id, token) => {
 		var myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
+		// myHeaders.append({ "Content-Type": "application/json", Authorization: "Bearer " + token });
 
 		var raw = JSON.stringify({
 			Foto: planta.Foto,
@@ -119,7 +142,8 @@ function App() {
 
 		var requestOptions = {
 			method: "PATCH",
-			headers: myHeaders,
+			// headers: myHeaders,
+			headers: new Headers({ "Content-Type": "application/json", Authorization: "Bearer " + token }),
 			body: raw,
 			redirect: "follow",
 		};
@@ -169,20 +193,29 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				<Header />
-				<main>
+				<main className="mx-auto">
 					<Switch>
+						{/* <Header /> */}
 						<Route exact path="/crear">
+							<Header />
 							<Formulario añadirPlanta={añadirPlanta} />
 						</Route>
-
 						<Route exact path="/mostrar">
+							<Header />
+							{/* Busqueda */}
 							<div className="container">
 								<div className="d-flex justify-content-center mb-4">
 									<input type="text" name="busca" icon="search" id="" placeholder="Buscar planta..." onChange={(e) => searchItems(e.target.value)} className="form-control" />
 								</div>
 							</div>
-							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} />
+
+							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} tieneAcceso={tieneAcceso} />
+						</Route>
+						<Route exact path="/menu">
+							<Header />
+						</Route>
+						<Route>
+							<Login exact path="/" gestionarAcceso={gestionarAcceso} />
 						</Route>
 					</Switch>
 				</main>

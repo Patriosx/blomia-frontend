@@ -3,13 +3,14 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./Tarjetas.css";
 
 const Editar = (props) => {
 	const planta = props.planta;
 	const modificar = props.modificar;
+	const token = props.datoStorage.token;
+
 	const [open2, setOpen2] = useState(false);
 	// console.log("planta editar", planta);
 	let imgURL = "";
@@ -59,15 +60,13 @@ const Editar = (props) => {
 			Foto: planta.Foto ? planta.Foto : [imgURL, publicID],
 		};
 		/**/
-		modificar(nuevaPlanta, planta._id);
-		console.log("nuevaPlanta", nuevaPlanta);
-		console.log(nuevaPlanta.Precio, nuevaPlanta.Precio.length);
+		modificar(nuevaPlanta, planta._id, token);
 	};
 	return (
-		<div id="">
+		<div id="editarPlanta">
 			<button
 				id="btnEditar"
-				className="btn btn-warning m-3"
+				className="btn btn-warning mb-3"
 				onClick={() => {
 					handleClickOpen2();
 					console.log("planta editar", planta);

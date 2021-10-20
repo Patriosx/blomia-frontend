@@ -59,3 +59,16 @@
 #formedit {
 	/* width: 100% !important; */
 }
+.tarjeta {
+	/* max-width: 650px !important; */
+}
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 500px) {
+	.tarjeta {
+		/* max-width: 400px !important; */
+	}
+}
+select {
+	border-radius: 60px !important;
+	/* margin-top: 10px !important; */
+}
