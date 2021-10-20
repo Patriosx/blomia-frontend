@@ -1,5 +1,5 @@
 import React from "react";
-import "./login.css";
+import "./Login.css";
 import foto from "./images/logo-blomia.png";
 import { useState } from "react";
 
