@@ -19,7 +19,7 @@ function App() {
 	// Obtiene el token del usuario si se ha logueado correctamente
 	const [token, setToken] = useState();
 	// Traemos desde el componente Login los datos del usuario enviados desde el servidor mediante esta función prop
-	let datosLog = "";
+
 	const gestionarAcceso = async (login) => {
 		await axios
 			.post(`${BASE_URL}/usuarios/login/`, login)
@@ -39,7 +39,7 @@ function App() {
 						token: data.token,
 					})
 				);
-				datosLog = JSON.parse(localStorage.getItem("usuario_blomia"));
+				// datosLog = JSON.parse(localStorage.getItem("usuario_blomia"));
 			})
 			.catch((err) => {
 				console.log("Error al iniciar sesión");
@@ -193,7 +193,6 @@ function App() {
 			<Router>
 				<main className="mx-auto">
 					<Switch>
-						{/* <Header /> */}
 						<Route exact path="/crear">
 							<Header />
 							<Formulario añadirPlanta={añadirPlanta} />
@@ -208,9 +207,6 @@ function App() {
 							</div>
 
 							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} tieneAcceso={tieneAcceso} />
-						</Route>
-						<Route exact path="/menu">
-							<Header />
 						</Route>
 						<Route>
 							<Login exact path="/" gestionarAcceso={gestionarAcceso} />
