@@ -29,7 +29,7 @@ const Login = ({ gestionarAcceso }) => {
 					</label>
 					<input id="tab-2" type="radio" name="tab" className="sign-up" />
 
-					<label htmlFor="" className="tab entrar" onClick={() => (window.location.href = "/crear")}>
+					<label htmlFor="" className="tab entrar" onClick={() => (window.location.href = "/mostrar")}>
 						ENTRAR
 					</label>
 

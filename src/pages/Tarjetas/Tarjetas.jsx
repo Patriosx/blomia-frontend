@@ -4,7 +4,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-// import "./Tarjetas.css";
 import * as React from "react";
 import Eliminar from "./Eliminar";
 import Editar from "./Editar";
@@ -40,22 +39,27 @@ function Tarjetas(props) {
 				</h3>
 				{/* </div> */}
 				<div>
-					<p>Referencia:{planta.Referencia}</p>
-					<p>Tamaño:{planta.Tamaño}</p>
-					<p>Stock:{planta.Stock}</p>
+					<p>Referencia: {planta.Referencia}</p>
+					<p>Tamaño: {planta.Tamaño}</p>
+					<p>Stock: {planta.Stock}</p>
 					<p className={planta.Activo ? "btn btn-outline-danger" : "btn btn-outline-info"} onClick={handleClickOpen}>
 						Activo: {planta.Activo ? "SI" : "NO"}
 					</p>
-					<div className="mb-3">
-						<p>Cliente:</p>
-						<select name="cliente" id="categorias" className="form-control text-center">
-							<option value="-1">--Elige una opción--</option>
-							<option value="0">Categoría 1: {planta.Precio[0] ? `${planta.Precio[0]} €` : "No tiene precio"}</option>
-							<option value="1">Categoría 2: {planta.Precio[1] ? `${planta.Precio[1]} €` : "No tiene precio"}</option>
-							<option value="2">Categoría 3: {planta.Precio[2] ? `${planta.Precio[2]} €` : "No tiene precio"}</option>
-							<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
-						</select>
-					</div>
+					{/* Precios. SOLO PARA ADMINISTRADOR */}
+					{tieneAcceso ? (
+						<div className="mb-3">
+							<p>Cliente:</p>
+							<select name="cliente" id="categorias" className="form-control text-center">
+								<option value="-1">--Elige una opción--</option>
+								<option value="0">Categoría 1: {planta.Precio[0] ? `${planta.Precio[0]} €` : "No tiene precio"}</option>
+								<option value="1">Categoría 2: {planta.Precio[1] ? `${planta.Precio[1]} €` : "No tiene precio"}</option>
+								<option value="2">Categoría 3: {planta.Precio[2] ? `${planta.Precio[2]} €` : "No tiene precio"}</option>
+								<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
+							</select>
+						</div>
+					) : (
+						""
+					)}
 				</div>
 				{tieneAcceso ? <Editar planta={planta} datoStorage={datoStorage} modificar={modificar} /> : ""}
 			</div>
