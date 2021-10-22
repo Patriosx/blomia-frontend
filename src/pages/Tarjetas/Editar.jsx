@@ -80,7 +80,7 @@ const Editar = (props) => {
 				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={submitEditar} encType="multipart/form-data" className="form ">
-						<label htmlFor="">Seleccione imagen de planta</label>
+						<h5 className="text-center">Nuevos datos de la planta</h5>
 						{/* <input type="file" id="" accept="image/*" className="form-control" /> */}
 						<div className="datos">
 							<input type="text" placeholder="Nombre" className="form-control" onChange={handleInputModificados} name="Nombre" />
@@ -91,14 +91,14 @@ const Editar = (props) => {
 
 						{/* INPUT PRECIOS */}
 						<div className="">
-							<h3 className="text-center">PRECIOS</h3>
+							<h5 className="text-center">Precios</h5>
 							<input type="number" step="0.01" className="form-control" placeholder="Cliente 1" onChange={handlePreciosModificados} name="cliente1" />
 							<input type="number" step="0.01" className="form-control" placeholder="Cliente 2" onChange={handlePreciosModificados} name="cliente2" />
 							<input type="number" step="0.01" className="form-control" placeholder="Cliente 3" onChange={handlePreciosModificados} name="cliente3" />
 							<input type="number" step="0.01" className="form-control" placeholder="Cliente 4" onChange={handlePreciosModificados} name="cliente4" />
 						</div>
 						{/* BOTONES */}
-						<div>
+						<div className="d-flex justify-content-center">
 							<div onClick={handleClose2} className="btn btn-danger" id="botones">
 								Cancelar
 							</div>

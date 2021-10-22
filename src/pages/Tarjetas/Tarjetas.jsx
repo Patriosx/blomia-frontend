@@ -47,21 +47,23 @@ function Tarjetas(props) {
 					</p>
 					{/* Precios. SOLO PARA ADMINISTRADOR */}
 					{tieneAcceso ? (
-						<div className="mb-3">
-							<p>Cliente:</p>
-							<select name="cliente" id="categorias" className="form-control text-center">
-								<option value="-1">--Elige una opción--</option>
-								<option value="0">Categoría 1: {planta.Precio[0] ? `${planta.Precio[0]} €` : "No tiene precio"}</option>
-								<option value="1">Categoría 2: {planta.Precio[1] ? `${planta.Precio[1]} €` : "No tiene precio"}</option>
-								<option value="2">Categoría 3: {planta.Precio[2] ? `${planta.Precio[2]} €` : "No tiene precio"}</option>
-								<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
-							</select>
-						</div>
+						<>
+							<div className="mb-3">
+								<p>Cliente:</p>
+								<select name="cliente" id="categorias" className="form-control text-center">
+									<option value="-1">--Elige una opción--</option>
+									<option value="0">Categoría 1: {planta.Precio[0] ? `${planta.Precio[0]} €` : "No tiene precio"}</option>
+									<option value="1">Categoría 2: {planta.Precio[1] ? `${planta.Precio[1]} €` : "No tiene precio"}</option>
+									<option value="2">Categoría 3: {planta.Precio[2] ? `${planta.Precio[2]} €` : "No tiene precio"}</option>
+									<option value="3">Categoría 4: {planta.Precio[3] ? `${planta.Precio[3]} €` : "No tiene precio"}</option>
+								</select>
+							</div>
+							<Editar planta={planta} datoStorage={datoStorage} modificar={modificar} />
+						</>
 					) : (
 						""
 					)}
 				</div>
-				{tieneAcceso ? <Editar planta={planta} datoStorage={datoStorage} modificar={modificar} /> : ""}
 			</div>
 
 			<Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
