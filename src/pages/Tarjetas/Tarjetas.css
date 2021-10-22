@@ -51,7 +51,7 @@
 .form {
 	row-gap: 1rem;
 }
-.form input {
+.formEditar input {
 	/* margin-bottom: 0.5rem; */
 	align-self: center;
 	margin: 0 auto 0.5rem auto;
@@ -69,6 +69,11 @@
 	}
 }
 select {
-	border-radius: 60px !important;
+	/* border-radius: 60px !important; */
 	/* margin-top: 10px !important; */
+}
+.cambiarStock input {
+	/* border-top-right-radius: 0 !important; */
+	/* top left, top right, bottom right, bottom left */
+	border-radius: 10px 0px 0px 10px !important;
 }

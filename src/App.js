@@ -147,6 +147,17 @@ function App() {
 		}
 		recuperaDatos();
 	};
+
+	const cambiarStock = async (nuevoStock, id) => {
+		try {
+			await axios.patch(`${BASE_URL}/plantas/stock/${id}`, { Stock: nuevoStock });
+			console.log("Client: Stock actualizado");
+		} catch (error) {
+			console.log(error);
+		}
+		recuperaDatos();
+	};
+
 	//------------------------------------------Funcion Buscar 2.0------------------------------------------------------------------
 
 	const [filteredResults, setFilteredResults] = useState([]);
@@ -192,7 +203,7 @@ function App() {
 								</div>
 							</div>
 
-							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} />
+							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} cambiarStock={cambiarStock} />
 						</Route>
 						<Route exact path="/menu">
 							<Header />

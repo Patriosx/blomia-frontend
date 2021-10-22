@@ -8,6 +8,7 @@ const MostrarTarjetas = (props) => {
 	const searchInput = props.searchInput;
 	const filteredResults = props.filteredResults;
 	const cambiarActivo = props.cambiarActivo;
+	const cambiarStock = props.cambiarStock;
 
 	return (
 		<div className="container-fluid">
@@ -16,10 +17,10 @@ const MostrarTarjetas = (props) => {
 			<div className="row row-cols-auto">
 				{searchInput.length > 1
 					? filteredResults.map((planta) => {
-							return <Tarjetas key={planta._id} planta={planta} eliminar={eliminar} modificar={modificar} cambiarActivo={cambiarActivo} />;
+							return <Tarjetas key={planta._id} planta={planta} eliminar={eliminar} modificar={modificar} cambiarActivo={cambiarActivo} cambiarStock={cambiarStock} />;
 					  })
 					: listaPlantas.map((planta) => {
-							return <Tarjetas key={planta._id} planta={planta} eliminar={eliminar} modificar={modificar} cambiarActivo={cambiarActivo} />;
+							return <Tarjetas key={planta._id} planta={planta} eliminar={eliminar} modificar={modificar} cambiarActivo={cambiarActivo} cambiarStock={cambiarStock} />;
 					  })}
 			</div>
 		</div>

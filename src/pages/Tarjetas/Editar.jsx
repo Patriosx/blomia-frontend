@@ -79,7 +79,7 @@ const Editar = (props) => {
 					Editar Referencia
 				</DialogTitle>
 				<DialogContent>
-					<form onSubmit={submitEditar} encType="multipart/form-data" className="form ">
+					<form onSubmit={submitEditar} encType="multipart/form-data" className="formEditar ">
 						<h5 className="text-center">Nuevos datos de la planta</h5>
 						{/* <input type="file" id="" accept="image/*" className="form-control" /> */}
 						<div className="datos">
