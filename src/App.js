@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 function App() {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
 	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
-	const token = datoStorage.token;
+	// const token = datoStorage.token;
 	const gestionarAcceso = async (login) => {
 		await axios
 			.post(`${BASE_URL}/usuarios/login/`, login)
@@ -74,7 +74,6 @@ function App() {
 			Foto: planta.Foto,
 		});
 
-		// console.log("raw", raw);
 		let requestOptions = {
 			method: "POST",
 			headers: new Headers({ "Content-Type": "application/json", Authorization: "Bearer " + token }),
@@ -91,6 +90,7 @@ function App() {
 
 	let imgURL = "";
 	let publicID = "";
+
 	const uploadImage = async (imageSelected) => {
 		if (!imageSelected)
 			return toast.warn("Ya existe una planta con esta referencia.", {
@@ -117,6 +117,40 @@ function App() {
 			});
 	};
 
+	const registrarPlanta = async (nuevaEntrada, imageSelected, precios) => {
+		try {
+			//Subimos la imagen a cloudinary
+			if (imageSelected) await uploadImage(imageSelected);
+		} catch (error) {
+			console.log(error);
+		}
+
+		//creamos la nueva planta con toda la informacion
+		const nuevaPlanta = {
+			Nombre: nuevaEntrada.Nombre,
+			Referencia: nuevaEntrada.Referencia,
+			Tamaño: nuevaEntrada.Tamaño,
+			Stock: nuevaEntrada.Stock,
+			Activo: nuevaEntrada.Activo,
+			Precio: [precios.cliente1, precios.cliente2, precios.cliente3, precios.cliente4],
+			Foto: [imgURL, publicID],
+		};
+		// console.log("nuevaPlanta", nuevaPlanta);
+		//se guarda la nueva planta la base de datos, SOLO SI ESTAS LOGEADO
+		if (datoStorage) {
+			añadirPlanta(nuevaPlanta, datoStorage.token);
+			toast.success("PLANTA CREADA CON EXITO", {
+				theme: "colored",
+				autoClose: 5000,
+			});
+		} else {
+			toast.error("No tienes permiso para hacer esto", {
+				theme: "colored",
+				autoClose: 5000,
+			});
+			return false;
+		}
+	};
 	// ----------------------------Get Eliminar---------------------------------
 
 	const eliminarPlanta = async (_id, token) => {
@@ -218,7 +252,7 @@ function App() {
 						{/* <Header /> */}
 						<Route exact path="/crear">
 							<Header />
-							<Formulario añadirPlanta={añadirPlanta} uploadImage={uploadImage} imgURL={imgURL} publicID={publicID} />
+							<Formulario registrarPlanta={registrarPlanta} />
 						</Route>
 						<Route exact path="/mostrar">
 							<Header />

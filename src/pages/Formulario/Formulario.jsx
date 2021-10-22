@@ -9,18 +9,13 @@ import Foto from "./Foto";
 
 function Formulario(props) {
 	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
-	const token = datoStorage.token;
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
-	const añadirPlanta = props.añadirPlanta;
 	const uploadImage = props.uploadImage;
-	let imgURL = props.imgURL;
-	let publicID = props.publicID;
+	const registrarPlanta = props.registrarPlanta;
 
 	/***************************************** */
 	//IMAGEN CLOUDINARY
 	const [imageSelected, setImageSelected] = useState("");
-	const cloud_name = process.env.REACT_APP_CLOUD_NAME;
-	const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
 	const [nuevaEntrada, setNuevaEntrada] = useState({
 		Nombre: "",
@@ -38,28 +33,6 @@ function Formulario(props) {
 		cliente4: "",
 	});
 
-	const registrarPlanta = async (e) => {
-		try {
-			//Subimos la imagen a cloudinary
-			if (imageSelected) await uploadImage(imageSelected);
-		} catch (error) {
-			console.log(error);
-		}
-
-		//creamos la nueva planta con toda la informacion
-		const nuevaPlanta = {
-			Nombre: nuevaEntrada.Nombre,
-			Referencia: nuevaEntrada.Referencia,
-			Tamaño: nuevaEntrada.Tamaño,
-			Stock: nuevaEntrada.Stock,
-			Activo: nuevaEntrada.Activo,
-			Precio: [precios.cliente1, precios.cliente2, precios.cliente3, precios.cliente4],
-			Foto: [imgURL, publicID],
-		};
-		// console.log("nuevaPlanta", nuevaPlanta);
-		//se guarda la nueva planta la base de datos
-		añadirPlanta(nuevaPlanta, token);
-	};
 	/**/
 	const comprobarPlanta = async (e) => {
 		e.preventDefault();
@@ -70,12 +43,9 @@ function Formulario(props) {
 			let guardamos = response.data;
 
 			if (guardamos) {
-				registrarPlanta();
+				// nuevaEntrada, imageSelected, precios
+				registrarPlanta(nuevaEntrada, imageSelected, precios);
 				limpiarForm();
-				toast.success("PLANTA CREADA CON EXITO", {
-					theme: "colored",
-					autoClose: 5000,
-				});
 			} else {
 				console.log("Cliente: Esta referencia ya existe");
 				toast.error("Ya existe una planta con esta referencia", {
