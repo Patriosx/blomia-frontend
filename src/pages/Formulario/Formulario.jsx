@@ -8,15 +8,18 @@ import "core-js";
 import Foto from "./Foto";
 
 function Formulario(props) {
+	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
+	const token = datoStorage.token;
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
 	const añadirPlanta = props.añadirPlanta;
+	const uploadImage = props.uploadImage;
+	let imgURL = props.imgURL;
+	let publicID = props.publicID;
 
 	/***************************************** */
 	//IMAGEN CLOUDINARY
 	const [imageSelected, setImageSelected] = useState("");
 	const cloud_name = process.env.REACT_APP_CLOUD_NAME;
-	let imgURL = "";
-	let publicID = "";
 	const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
 
 	const [nuevaEntrada, setNuevaEntrada] = useState({
@@ -38,7 +41,7 @@ function Formulario(props) {
 	const registrarPlanta = async (e) => {
 		try {
 			//Subimos la imagen a cloudinary
-			await uploadImage();
+			if (imageSelected) await uploadImage(imageSelected);
 		} catch (error) {
 			console.log(error);
 		}
@@ -55,7 +58,7 @@ function Formulario(props) {
 		};
 		// console.log("nuevaPlanta", nuevaPlanta);
 		//se guarda la nueva planta la base de datos
-		añadirPlanta(nuevaPlanta);
+		añadirPlanta(nuevaPlanta, token);
 	};
 	/**/
 	const comprobarPlanta = async (e) => {
@@ -63,7 +66,7 @@ function Formulario(props) {
 		//comprobamos que no exista esa referencia en la BD
 		try {
 			const response = await axios(`${BASE_URL}/plantas/comprobar/${nuevaEntrada.Referencia}`);
-			// console.log(response.data);
+			console.log(response.data);
 			let guardamos = response.data;
 
 			if (guardamos) {
@@ -83,6 +86,7 @@ function Formulario(props) {
 			}
 		} catch (error) {
 			console.log("Error al comprobar");
+			console.log(error);
 		}
 	};
 	/***********************************************/
@@ -129,34 +133,6 @@ function Formulario(props) {
 			[event.target.name]: event.target.value,
 		});
 	};
-	const uploadImage = async () => {
-		if (!imageSelected)
-			return toast.warn("Ya existe una planta con esta referencia.", {
-				theme: "colored",
-				autoClose: 5000,
-			});
-		// console.log("imageSelected", imageSelected);
-
-		const formData = new FormData();
-		formData.append("file", imageSelected);
-		//nombre del preset de cloudinary: settings > uploads > Upload presets: xh2y2hm1
-		formData.append("upload_preset", uploadPreset);
-		const URL = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
-		await axios
-			.post(URL, formData)
-			.then((response) => {
-				console.log("response", response);
-				// if (response.status === 200) alert("Imagen subida correctamente");
-				imgURL = response.data.secure_url;
-				publicID = response.data.public_id;
-				document.querySelector(".form-control").value = null;
-			})
-			.catch((e) => {
-				console.log(e);
-			});
-		// console.log(imgURL);
-		// console.log(publicID);
-	};
 
 	return (
 		<div className="container">
@@ -173,7 +149,6 @@ function Formulario(props) {
 								accept="image/*"
 								className="form-control foto"
 								type="file"
-								required
 								onChange={(e) => {
 									setImageSelected(e.target.files[0]);
 								}}
@@ -185,7 +160,7 @@ function Formulario(props) {
 						</>
 					)}
 					<>
-						<input type="text" placeholder="Nombre" className="form-control" onChange={handleInput} name="Nombre" required />
+						<input type="text" placeholder="Nombre" className="form-control" onChange={handleInput} name="Nombre" />
 						<input type="text" placeholder="Referencia" className="form-control" onChange={handleInput} id="referencia" name="Referencia" required />
 						<input type="text" placeholder="Tamaño" className="form-control" onChange={handleInput} name="Tamaño" />
 						<input type="number" placeholder="Stock" className="form-control" onChange={handleInput} name="Stock" />

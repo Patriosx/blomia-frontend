@@ -40,14 +40,14 @@ function Tarjetas(props) {
 					<img src={planta.Foto[0]} alt="" className="img-fluid card" />
 				</div>
 				<h3 id="" className="fw-bold">
-					{planta.Nombre}
+					{planta.Nombre ? planta.Nombre : "-"}
 				</h3>
 				{/* </div> */}
 				<div>
 					<p>Referencia: {planta.Referencia}</p>
 					<p>Tamaño: {planta.Tamaño}</p>
-					<div className="mb-3">
-						<span className="input-group-text" id="basic-addon1">
+					<div className=" mb-3 ">
+						<span className="input-group-text d-flex justify-content-center" id="basic-addon1">
 							Stock: {planta.Stock}
 							<div className="btn-group my-auto cambiarStock">
 								<input type="number" className="form-control ms-2" placeholder="Nuevo stock" aria-describedby="basic-addon2" onChange={handleNuevoStock} name="nuevoStock" />

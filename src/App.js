@@ -11,7 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 function App() {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
-
+	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
+	const token = datoStorage.token;
 	const gestionarAcceso = async (login) => {
 		await axios
 			.post(`${BASE_URL}/usuarios/login/`, login)
@@ -62,10 +63,7 @@ function App() {
 
 	// ----------------------------Funcion Añadir---------------------------------
 
-	const añadirPlanta = async (planta) => {
-		let myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
-
+	const añadirPlanta = async (planta, token) => {
 		let raw = JSON.stringify({
 			Nombre: planta.Nombre,
 			Referencia: planta.Referencia,
@@ -79,7 +77,7 @@ function App() {
 		// console.log("raw", raw);
 		let requestOptions = {
 			method: "POST",
-			headers: myHeaders,
+			headers: new Headers({ "Content-Type": "application/json", Authorization: "Bearer " + token }),
 			body: raw,
 			redirect: "follow",
 		};
@@ -89,6 +87,34 @@ function App() {
 			.catch((error) => console.log("error", error));
 
 		recuperaDatos();
+	};
+
+	let imgURL = "";
+	let publicID = "";
+	const uploadImage = async (imageSelected) => {
+		if (!imageSelected)
+			return toast.warn("Ya existe una planta con esta referencia.", {
+				theme: "colored",
+				autoClose: 5000,
+			});
+		// console.log("imageSelected", imageSelected);
+
+		const formData = new FormData();
+		formData.append("file", imageSelected);
+		//nombre del preset de cloudinary: settings > uploads > Upload presets: xh2y2hm1
+		formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+		const URL = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
+		await axios
+			.post(URL, formData)
+			.then((response) => {
+				console.log("response", response);
+				imgURL = response.data.secure_url;
+				publicID = response.data.public_id;
+				// document.querySelector(".form-control").value = null;
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	};
 
 	// ----------------------------Get Eliminar---------------------------------
@@ -192,7 +218,7 @@ function App() {
 						{/* <Header /> */}
 						<Route exact path="/crear">
 							<Header />
-							<Formulario añadirPlanta={añadirPlanta} />
+							<Formulario añadirPlanta={añadirPlanta} uploadImage={uploadImage} imgURL={imgURL} publicID={publicID} />
 						</Route>
 						<Route exact path="/mostrar">
 							<Header />
