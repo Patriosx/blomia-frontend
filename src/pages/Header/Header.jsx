@@ -2,13 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import ConfirmarDialog from "../Formulario/ConfirmarDialog";
 
-const Header = () => {
+const Header = ({ cerrarSesion }) => {
 	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
 	const [open, setOpen] = React.useState(false);
-	const cerrarSesion = () => {
-		localStorage.removeItem("usuario_blomia");
-		window.location.href = "/";
-	};
+
 	// console.log(datoStorage);
 	return (
 		<div className="container-fluid mb-4 menu">

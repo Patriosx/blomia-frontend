@@ -1,14 +1,10 @@
 import React from "react";
 
 const Foto = ({ imgURL }) => {
-	const styles = {
-		width: "400px",
-	};
-
 	if (imgURL) {
 		return (
 			<div className="">
-				<img src={imgURL} className="img-fluid card" />
+				<img src={imgURL} alt="Foto de la planta" className="img-fluid card" />
 			</div>
 		);
 	} else {

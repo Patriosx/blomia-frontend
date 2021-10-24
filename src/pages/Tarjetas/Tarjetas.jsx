@@ -15,14 +15,17 @@ function Tarjetas(props) {
 	const modificar = props.modificar;
 	const cambiarActivo = props.cambiarActivo;
 	const cambiarStock = props.cambiarStock;
+
 	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
 	const tieneAcceso = datoStorage ? true : false;
 	const [nuevoStock, setNuevoStock] = useState("");
 	/***  Dialog ***/
 	const [open, setOpen] = useState(false);
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+
+	// const handleClickOpen = () => {
+	// 	setOpen(true);
+	// };
+
 	const handleClose = () => {
 		setOpen(false);
 	};
@@ -35,23 +38,28 @@ function Tarjetas(props) {
 			<div key={planta._id} id="" className="card text-white bg-primary mb-2">
 				{tieneAcceso ? <Eliminar planta={planta} eliminar={eliminar} datoStorage={datoStorage} /> : ""}
 
-				{/* <div> */}
 				<div className="m-2">
 					<img src={planta.Foto[0]} alt="" className="img-fluid card" />
 				</div>
 				<h3 id="" className="fw-bold">
 					{planta.Nombre ? planta.Nombre : "-"}
 				</h3>
-				{/* </div> */}
 				<div>
 					<p>Referencia: {planta.Referencia}</p>
 					<p>Tamaño: {planta.Tamaño}</p>
 					<div className=" mb-3 ">
 						<span className="input-group-text d-flex justify-content-center" id="basic-addon1">
 							Stock: {planta.Stock}
-							<div className="btn-group my-auto cambiarStock">
-								<input type="number" className="form-control ms-2" placeholder="Nuevo stock" aria-describedby="basic-addon2" onChange={handleNuevoStock} name="nuevoStock" />
-								<button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={() => cambiarStock(nuevoStock, planta._id)}>
+							<div className="btn-group my-auto cambiarStock ">
+								<input type="number" className="form-control ms-2 stock" placeholder="Nuevo stock" aria-describedby="basic-addon2" onChange={handleNuevoStock} name="nuevoStock" required />
+								<button
+									className="btn btn-outline-primary"
+									type="button"
+									id="button-addon2"
+									onClick={() => {
+										!document.querySelector(".stock").value ? alert("Necesita rellenar el campo") : cambiarStock(nuevoStock, planta._id);
+									}}
+								>
 									cambiar
 								</button>
 							</div>
@@ -84,7 +92,7 @@ function Tarjetas(props) {
 			</div>
 
 			<Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-				<DialogTitle id="alert-dialog-title">{/* <p id="alertTitle">Confirme cambio de estado Activo de la planta</p> */}Desea cambiar de estado Activo de la planta</DialogTitle>
+				<DialogTitle id="alert-dialog-title">Desea cambiar de estado Activo de la planta</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">¿Esta seguro de que desea Cambiar el estado de {planta.Nombre}</DialogContentText>
 				</DialogContent>

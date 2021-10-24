@@ -7,12 +7,17 @@ import Login from "./pages/Login/Login.jsx";
 import "./App.css";
 import axios from "axios";
 import MostrarTarjetas from "./pages/Tarjetas/MostrarTarjetas.jsx";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function App() {
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
 	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
-	// const token = datoStorage.token;
+
+	const cerrarSesion = () => {
+		localStorage.removeItem("usuario_blomia");
+		window.location.href = "/";
+	};
+
 	const gestionarAcceso = async (login) => {
 		await axios
 			.post(`${BASE_URL}/usuarios/login/`, login)
@@ -29,6 +34,12 @@ function App() {
 						token: data.token,
 					})
 				);
+
+				// Se borrara el objeto del localstorage
+				setInterval(() => {
+					// dura 45 min
+					localStorage.removeItem("usuario_blomia");
+				}, 2000);
 			})
 			.catch((err) => {
 				console.log("Error al iniciar sesión");
@@ -107,7 +118,7 @@ function App() {
 		await axios
 			.post(URL, formData)
 			.then((response) => {
-				console.log("response", response);
+				// console.log("response", response);
 				imgURL = response.data.secure_url;
 				publicID = response.data.public_id;
 				// document.querySelector(".form-control").value = null;
@@ -179,7 +190,7 @@ function App() {
 			Referencia: planta.Referencia,
 			Tamaño: planta.Tamaño,
 			Stock: planta.Stock,
-			Activo: planta.Activo,
+			// Activo: planta.Activo,
 			Precio: planta.Precio,
 		});
 
@@ -193,7 +204,15 @@ function App() {
 
 		await fetch(`${BASE_URL}/plantas/modificar/${id}`, requestOptions)
 			.then((response) => response.text())
-			.catch((error) => console.log("error", error));
+			.catch((error) => {
+				console.log("error", error);
+				alert("No se ha podido modificar");
+
+				// return toast.warn("No se ha podido modificar la planta", {
+				// 	theme: "colored",
+				// 	autoClose: 5000,
+				// });
+			});
 
 		recuperaDatos();
 	};
@@ -247,15 +266,19 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
+				<Switch>
+					<Route exact path="/">
+						<Login gestionarAcceso={gestionarAcceso} />
+					</Route>
+				</Switch>
 				<main className="mx-auto">
 					<Switch>
-						{/* <Header /> */}
 						<Route exact path="/crear">
-							<Header />
+							<Header cerrarSesion={cerrarSesion} />
 							<Formulario registrarPlanta={registrarPlanta} />
 						</Route>
 						<Route exact path="/mostrar">
-							<Header />
+							<Header cerrarSesion={cerrarSesion} />
 							{/* Busqueda */}
 							<div className="container">
 								<div className="d-flex justify-content-center mb-4">
@@ -263,13 +286,10 @@ function App() {
 								</div>
 							</div>
 
-							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} cambiarStock={cambiarStock} />
+							<MostrarTarjetas searchInput={searchInput} listaPlantas={listaPlantas.reverse()} filteredResults={filteredResults} eliminar={eliminarPlanta} modificar={modificarPlanta} cambiarActivo={cambiarActivo} cambiarStock={cambiarStock} uploadImage={uploadImage} />
 						</Route>
 						<Route exact path="/menu">
-							<Header />
-						</Route>
-						<Route>
-							<Login exact path="/" gestionarAcceso={gestionarAcceso} />
+							{/* <Header /> */}
 						</Route>
 					</Switch>
 				</main>

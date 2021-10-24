@@ -8,9 +8,7 @@ import "core-js";
 import Foto from "./Foto";
 
 function Formulario(props) {
-	const datoStorage = JSON.parse(localStorage.getItem("usuario_blomia"));
 	const BASE_URL = process.env.REACT_APP_BASE_URL;
-	const uploadImage = props.uploadImage;
 	const registrarPlanta = props.registrarPlanta;
 
 	/***************************************** */
@@ -61,30 +59,11 @@ function Formulario(props) {
 	};
 	/***********************************************/
 
-	const PROBANDO = () => {
-		toast.warn("Probando", {
-			theme: "colored",
-			autoClose: 5000,
-		});
-		/*
-		toast.success("PLANTA CREADA CON EXITO", {
-			position: "top-center",
-			type: "success",
-			theme: "colored",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-		});
-		*/
-	};
-
 	/************************************************/
 	const limpiarForm = () => {
 		document.querySelector("form").reset();
-		setImageSelected("");
+		// setImageSelected("");
+
 		setNuevaEntrada({ Nombre: "", Referencia: "", Tamaño: "", Stock: "", Activo: false, Precio: "" });
 		setPrecios("");
 	};
@@ -94,9 +73,11 @@ function Formulario(props) {
 			[event.target.name]: event.target.value,
 		});
 	};
+	/*
 	const handleActivo = (event) => {
 		setNuevaEntrada({ ...nuevaEntrada, [event.target.name]: document.getElementById("checkbox").checked ? true : false });
 	};
+	*/
 	const handlePrecios = (event) => {
 		setPrecios({
 			...precios,
@@ -107,7 +88,6 @@ function Formulario(props) {
 	return (
 		<div className="container">
 			<div className="cuerpo">
-				{/* <button onClick={PROBANDO}>PROBANDO</button> */}
 				<form type="" onSubmit={comprobarPlanta} encType="multipart/form-data" className="formulario bg-success mb-3">
 					<h2 className="tituloTarjeta" onClick={limpiarForm}>
 						Crear Nueva Referencia
@@ -134,12 +114,12 @@ function Formulario(props) {
 						<input type="text" placeholder="Referencia" className="form-control" onChange={handleInput} id="referencia" name="Referencia" required />
 						<input type="text" placeholder="Tamaño" className="form-control" onChange={handleInput} name="Tamaño" />
 						<input type="number" placeholder="Stock" className="form-control" onChange={handleInput} name="Stock" />
-						<div>
+						{/* <div>
 							<label htmlFor="checkbox">
 								Referencia Activa
 								<input type="checkbox" id="checkbox" onChange={handleActivo} name="Activo" />
 							</label>
-						</div>
+						</div> */}
 						{/* este input precio es de prueba--------------------------------------------------------------- */}
 
 						<div className="">
