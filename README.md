@@ -11,11 +11,13 @@ Tecnologías Frontend:
   Reactjs
   Bootstrap
  
-Tecnologías Backend: https://github.com/Patriosx/blomia-backend
+Tecnologías Backend: 
 Nodejs
 Express
 MongoDB
 Mongoose
+
+https://github.com/Patriosx/blomia-backend
   
   DEMO: https://blomiaviveros.herokuapp.com/
   
