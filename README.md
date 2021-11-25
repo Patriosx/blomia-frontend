@@ -4,19 +4,19 @@ Resolverá el problema del inventario de su vivero y ayudará a organizar las ci
 
 El trabajador va a poder agregar una planta con determinada información a una base de datos. Tomará una foto del ejemplar y rellenará un formulario con información referente a este.
 
-Tecnologías Frontend:
-  HTML
-  CSS
-  Javascript
-  Reactjs
-  Bootstrap
- 
-Tecnologías Backend: https://github.com/Patriosx/blomia-backend
-Nodejs
-Express
-MongoDB
-Mongoose
+<strong>Tecnologías Frontend: </strong>
+<br>
+  HTML<br>
+  CSS<br>
+  Javascript<br>
+  Reactjs<br>
+  Bootstrap<br>
 
+Tecnologías Backend: https://github.com/Patriosx/blomia-backend <br>
+Nodejs<br>
+Express<br>
+MongoDB<br>
+Mongoose<br>
   
   DEMO: https://blomiaviveros.herokuapp.com/
   
